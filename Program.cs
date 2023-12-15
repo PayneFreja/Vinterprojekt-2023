@@ -1,12 +1,14 @@
 ﻿global using System.Numerics;
 using Raylib_cs;
+using Vinterprojekt_2023;
 
 Raylib.InitWindow(1600, 900, "dinorunner");
 
 
 Raylib.SetTargetFPS(60);
 Cube c = new();
-Enemy e = new();
+Food f = new();
+FoodFactory factory = new();
 Game game = new();
 Texture2D bkg;
 bkg = Raylib.LoadTexture("background1.png");
@@ -17,8 +19,7 @@ while (!Raylib.WindowShouldClose())
 
     //---------------------------------------SPEL GRAFIK----------------------------------------//
     Raylib.DrawTexture(bkg, 0, 0, Color.WHITE); // ritar upp bilden för scenen
-    Game.UpdateAll(c, e);
-    Game.DrawAll(c, e);
+    Game.UpdateAll(c, factory);
+    Game.DrawAll(c, f);
     Raylib.EndDrawing();
-
 }
