@@ -16,19 +16,22 @@ Game game = new();
 // bkg = Raylib.LoadTexture("background1.png");
 //---------------------------------------SPEL LOGIK----------------------------------------//
 while (!Raylib.WindowShouldClose())
-    Raylib.BeginDrawing(); // börjar rita spelet
-game.CheckScreen();
 {
-    if (game.CheckScreen() == "play")
+    Console.WriteLine($"{game.showScreen}");
+
+    game.CheckScreen();
+    if (game.showScreen == 1)
     {
         // Raylib.DrawTexture(bkg, 0, 0, Color.WHITE); // ritar upp bilden för scenen
+        Raylib.BeginDrawing(); // börjar rita spelet
+        Raylib.ClearBackground(Color.WHITE);
         Game.UpdateAll(c, factory, f, a, b);
         game.CheckTimer();
         Game.DrawAll(c, f, factory, FoodFactory.apples, FoodFactory.bananas);
-        Raylib.EndDrawing();
 
     }
 
     //---------------------------------------SPEL GRAFIK----------------------------------------//
 
+    Raylib.EndDrawing();
 }

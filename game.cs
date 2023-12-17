@@ -4,29 +4,20 @@ using Vinterprojekt_2023;
 public class Game
 {
 
-    // public static List<Food> foods = new List<Food>();
-    public static List<Food> foodsToRemove = new List<Food>();
-    public static float time = 10;
-    public string showScreen = "lobby";
 
-    public string CheckScreen()
+    public static float time = 10;
+    public int showScreen = 0;
+
+    public void CheckScreen()
     {
-        if (showScreen == "lobby")
+        if (showScreen == 0)
         {
             Lobby();
-            return "doNotPlay";
-        }
 
-        else if (showScreen == "game")
-        {
-            return "play";
         }
-
-        else
+        else if (showScreen == 2)
         {
             GameOver();
-            return "doNotPlay";
-
         }
 
     }
@@ -35,16 +26,15 @@ public class Game
         Raylib.DrawText("Welcome to CubeEater", 600, 400, 40, Color.DARKGREEN);
         Raylib.DrawText("Walk with W,S,A,D, eat as many fruits as possible before the timer runs out", 600, 500, 40, Color.DARKGREEN);
         Raylib.DrawText("Press space to start game", 600, 600, 40, Color.DARKGREEN);
-        Raylib.ClearBackground(Color.WHITE);
         if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE))
         {
-            showScreen = "game";
+            showScreen = 1;
         }
     }
     public void GameOver()
     {
-        Raylib.DrawText("Gameover!", 600, 400, 40, Color.DARKGREEN);
         Raylib.ClearBackground(Color.WHITE);
+        Raylib.DrawText("Gameover!", 600, 400, 40, Color.DARKGREEN);
 
     }
     public void CheckTimer()
@@ -52,7 +42,7 @@ public class Game
         time -= Raylib.GetFrameTime();
         if (time <= 0)
         {
-            showScreen = "gameOver";
+            showScreen = 2;
         }
     }
     public static int TimeSinceStart() // metod som konverterar en double till en int för att räkna tiden sedan start
