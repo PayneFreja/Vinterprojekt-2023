@@ -4,31 +4,68 @@ using Vinterprojekt_2023;
 public class Game
 {
 
-    public static List<Food> foods = new List<Food>();
+    // public static List<Food> foods = new List<Food>();
     public static List<Food> foodsToRemove = new List<Food>();
-    public static float time = 60;
+    public static float time = 10;
+    public string showScreen = "lobby";
 
+    public string CheckScreen()
+    {
+        if (showScreen == "lobby")
+        {
+            Lobby();
+            return "doNotPlay";
+        }
+
+        else if (showScreen == "game")
+        {
+            return "play";
+        }
+
+        else
+        {
+            GameOver();
+            return "doNotPlay";
+
+        }
+
+    }
+    public void Lobby()
+    {
+        Raylib.DrawText("Welcome to CubeEater", 600, 400, 40, Color.DARKGREEN);
+        Raylib.DrawText("Walk with W,S,A,D, eat as many fruits as possible before the timer runs out", 600, 500, 40, Color.DARKGREEN);
+        Raylib.DrawText("Press space to start game", 600, 600, 40, Color.DARKGREEN);
+        Raylib.ClearBackground(Color.WHITE);
+        if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE))
+        {
+            showScreen = "game";
+        }
+    }
+    public void GameOver()
+    {
+        Raylib.DrawText("Gameover!", 600, 400, 40, Color.DARKGREEN);
+        Raylib.ClearBackground(Color.WHITE);
+
+    }
     public void CheckTimer()
     {
         time -= Raylib.GetFrameTime();
         if (time <= 0)
         {
-            // gameover
+            showScreen = "gameOver";
         }
     }
-    public static int timeSinceStart() // metod som konverterar en double till en int för att räkna tiden sedan start
+    public static int TimeSinceStart() // metod som konverterar en double till en int för att räkna tiden sedan start
     {
         double gameTime = Raylib.GetTime();
         int seconds = (int)gameTime; // konverterar "double gametime" till "int seconds"
         return seconds;
     }
-    public static void DrawInts(FoodFactory factory, Food food, List<Food> foods, List<Apple> apples, List<Banana> bananas) // en metod som ritar spelets UI
+    public static void DrawInts(List<Apple> apples, List<Banana> bananas) // en metod som ritar spelets UI
     {
         Raylib.DrawText($"Time: {time}", 400, 35, 20, Color.BLACK);
-        Raylib.DrawText($"Spawned: {factory.spawnAmount}", 440, 70, 20, Color.BLACK);
-        Raylib.DrawText($"ListAmount: {foods.Count}", 440, 90, 20, Color.BLACK);
         Raylib.DrawText($"AppleListAmount: {apples.Count}", 440, 110, 20, Color.BLACK);
-        Raylib.DrawText($"BananaListAmount: {bananas.Count}", 440, 110, 20, Color.BLACK);
+        Raylib.DrawText($"BananaListAmount: {bananas.Count}", 440, 130, 20, Color.BLACK);
 
     }
     public static bool CollisionCheck(Cube cube, Food food) // en metod som kollar kollision mellan zoey och enemy.
@@ -43,16 +80,16 @@ public class Game
         }
     }
 
-    public static void UpdateAll(Cube cube, FoodFactory factory, List<Food> foodsToRemove, Food food, Apple apple, Banana banana) // en metod som kallar på bullet, enemy, tank och zoeys update-metoder
+    public static void UpdateAll(Cube cube, FoodFactory factory, Food food, Apple apple, Banana banana) // en metod som kallar på bullet, enemy, tank och zoeys update-metoder
     {
         cube.Update();
-        factory.Update(cube, foodsToRemove, food, apple, banana);
+        factory.Update(cube, food, apple, banana);
     }
-    public static void DrawAll(Cube cube, Food food, FoodFactory factory, List<Food> foods, List<Apple> apples, List<Banana> bananas) // metod som kallar på alla motsvarande draw-metoder samt UI.
+    public static void DrawAll(Cube cube, Food food, FoodFactory factory, List<Apple> apples, List<Banana> bananas) // metod som kallar på alla motsvarande draw-metoder samt UI.
     {
         cube.Draw();
-        Food.DrawAll(foods);
-        DrawInts(factory, food, foods, apples, bananas);
+        factory.DrawAll();
+        DrawInts(apples, bananas);
     }
 
 }

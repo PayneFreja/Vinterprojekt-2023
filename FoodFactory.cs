@@ -8,7 +8,9 @@ public class FoodFactory
     public int spawnAmount = 0;
 
     public static List<Apple> apples = new List<Apple>();
+    public static List<Apple> applesToRemove = new List<Apple>();
     public static List<Banana> bananas = new List<Banana>();
+    public static List<Banana> bananasToRemove = new List<Banana>();
 
     public void ResetAppleTimer(Apple apple)
     {
@@ -38,31 +40,41 @@ public class FoodFactory
     public void SpawnApple()
     {
         apples.Add(new Apple());
-        // spawnAmount++;
     }
     public void SpawnBanana()
     {
         bananas.Add(new Banana());
-        // spawnAmount++;
     }
 
-    public void Clear(List<Food> foodsToRemove)
+    public void Clear()
     {
-        foreach (Apple a in foodsToRemove)
+        foreach (Apple a in applesToRemove)
         {
             apples.Remove(a);
         }
-        foreach (Banana b in foodsToRemove)
+        foreach (Banana b in bananasToRemove)
         {
             bananas.Remove(b);
         }
     }
 
-    public void Update(Cube cube, List<Food> foodsToRemove, Food food, Apple apple, Banana banana)
+    public void Update(Cube cube, Food food, Apple apple, Banana banana)
     {
-        Clear(foodsToRemove);
-        food.Eaten(cube, foodsToRemove, apples, bananas);
+        Clear();
+        food.Eaten(cube, apples, bananas, applesToRemove, bananasToRemove);
         CheckFoodTimer(food, apple, banana);
+    }
+
+    public void DrawAll()
+    {
+        foreach (Apple a in apples)
+        {
+            a.Draw();
+        }
+        foreach (Banana b in bananas)
+        {
+            b.Draw();
+        }
     }
 
 }

@@ -8,7 +8,7 @@ public class Food
     public Rectangle rect;
     public Texture2D image;
     //public string Name { get => name; set => name = value; }s
-
+    public Color col;
     public float timeBetweenFoods;
     public float foodTimer = 0;
 
@@ -23,13 +23,13 @@ public class Food
     }
 
 
-    public void Eaten(Cube cube, List<Food> foodsToRemove, List<Apple> apples, List<Banana> bananas)
+    public void Eaten(Cube cube, List<Apple> apples, List<Banana> bananas, List<Apple> applesToRemove, List<Banana> bananasToRemove)
     {
         foreach (Apple a in apples)
         {
             if (Game.CollisionCheck(cube, a))
             {
-                foodsToRemove.Add(a);
+                applesToRemove.Add(a);
                 Game.time += a.additionalTime;
             }
         }
@@ -37,7 +37,7 @@ public class Food
         {
             if (Game.CollisionCheck(cube, b))
             {
-                foodsToRemove.Add(b);
+                bananasToRemove.Add(b);
                 Game.time += b.additionalTime;
             }
         }
@@ -45,15 +45,15 @@ public class Food
 
     public void Draw()
     {
-        Raylib.DrawRectangleRec(rect, Color.RED);
+        Raylib.DrawRectangleRec(rect, col);
     }
-    public static void DrawAll(List<Food> foods)
-    {
-        foreach (Food f in foods)
-        {
-            f.Draw();
-        }
-    }
+    // public static void DrawAll(List<Food> foods)
+    // {
+    //     foreach (Food f in foods)
+    //     {
+    //         f.Draw();
+    //     }
+    // }
 
 }
 
