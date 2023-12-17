@@ -6,16 +6,16 @@ public class Game
 
 
     public static float time = 10;
-    public int showScreen = 0;
+    public string showScreen = "lobby";
 
     public void CheckScreen()
     {
-        if (showScreen == 0)
+        if (showScreen == "lobby")
         {
             Lobby();
 
         }
-        else if (showScreen == 2)
+        else if (showScreen == "gameOver")
         {
             GameOver();
         }
@@ -28,13 +28,19 @@ public class Game
         Raylib.DrawText("Press space to start game", 600, 600, 40, Color.DARKGREEN);
         if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE))
         {
-            showScreen = 1;
+            showScreen = "play";
         }
     }
     public void GameOver()
     {
         Raylib.ClearBackground(Color.WHITE);
         Raylib.DrawText("Gameover!", 600, 400, 40, Color.DARKGREEN);
+        // Raylib.DrawText("Press SPACE to play again!", 600, 450, 40, Color.DARKGREEN);
+        // if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE)) // grunder för att starta om spelet.
+        // {
+        //     showScreen = 1;
+        //     time = 10;
+        // }
 
     }
     public void CheckTimer()
@@ -42,7 +48,7 @@ public class Game
         time -= Raylib.GetFrameTime();
         if (time <= 0)
         {
-            showScreen = 2;
+            showScreen = "gameOver";
         }
     }
     public static int TimeSinceStart() // metod som konverterar en double till en int för att räkna tiden sedan start

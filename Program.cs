@@ -20,7 +20,7 @@ while (!Raylib.WindowShouldClose())
     Console.WriteLine($"{game.showScreen}");
 
     game.CheckScreen();
-    if (game.showScreen == 1)
+    if (game.showScreen == "play")
     {
         // Raylib.DrawTexture(bkg, 0, 0, Color.WHITE); // ritar upp bilden för scenen
         Raylib.BeginDrawing(); // börjar rita spelet
