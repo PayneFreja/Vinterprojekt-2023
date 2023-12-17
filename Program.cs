@@ -19,7 +19,9 @@ while (!Raylib.WindowShouldClose())
 
     //---------------------------------------SPEL GRAFIK----------------------------------------//
     Raylib.DrawTexture(bkg, 0, 0, Color.WHITE); // ritar upp bilden för scenen
-    Game.UpdateAll(c, factory);
-    Game.DrawAll(c, f);
+    Game.UpdateAll(c, factory, Game.foods, Game.foodsToRemove, f);
+    game.CheckTimer();
+    Game.DrawAll(c, f, factory, Game.foods, FoodFactory.apples, FoodFactory.bananas);
     Raylib.EndDrawing();
+
 }

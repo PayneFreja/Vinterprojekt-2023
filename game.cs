@@ -3,6 +3,9 @@ using Raylib_cs;
 using Vinterprojekt_2023;
 public class Game
 {
+
+    public static List<Food> foods = new List<Food>();
+    public static List<Food> foodsToRemove = new List<Food>();
     public static float time = 60;
 
     public void CheckTimer()
@@ -19,9 +22,14 @@ public class Game
         int seconds = (int)gameTime; // konverterar "double gametime" till "int seconds"
         return seconds;
     }
-    public static void DrawInts() // en metod som ritar spelets UI
+    public static void DrawInts(FoodFactory factory, Food food, List<Food> foods, List<Apple> apples, List<Banana> bananas) // en metod som ritar spelets UI
     {
-        Raylib.DrawText($"Time: {timeSinceStart()}", 400, 35, 20, Color.BLACK);
+        Raylib.DrawText($"Time: {time}", 400, 35, 20, Color.BLACK);
+        Raylib.DrawText($"Spawned: {factory.spawnAmount}", 440, 70, 20, Color.BLACK);
+        Raylib.DrawText($"ListAmount: {foods.Count}", 440, 90, 20, Color.BLACK);
+        Raylib.DrawText($"AppleListAmount: {apples.Count}", 440, 110, 20, Color.BLACK);
+        Raylib.DrawText($"BananaListAmount: {bananas.Count}", 440, 110, 20, Color.BLACK);
+
     }
     public static bool CollisionCheck(Cube cube, Food food) // en metod som kollar kollision mellan zoey och enemy.
     {
@@ -35,16 +43,16 @@ public class Game
         }
     }
 
-    public static void UpdateAll(Cube cube, FoodFactory factory) // en metod som kallar på bullet, enemy, tank och zoeys update-metoder
+    public static void UpdateAll(Cube cube, FoodFactory factory, List<Food> foodsToRemove, Food food, Apple apple, Banana banana) // en metod som kallar på bullet, enemy, tank och zoeys update-metoder
     {
         cube.Update();
-        factory.Update(cube);
+        factory.Update(cube, foodsToRemove, food, apple, banana);
     }
-    public static void DrawAll(Cube cube, Food food) // metod som kallar på alla motsvarande draw-metoder samt UI.
+    public static void DrawAll(Cube cube, Food food, FoodFactory factory, List<Food> foods, List<Apple> apples, List<Banana> bananas) // metod som kallar på alla motsvarande draw-metoder samt UI.
     {
         cube.Draw();
-        Food.DrawAll();
-        DrawInts();
+        Food.DrawAll(foods);
+        DrawInts(factory, food, foods, apples, bananas);
     }
 
 }

@@ -3,9 +3,8 @@
 
     public Apple()
     {
-        timeBetweenFoods = 5;
-        foodsBetweenDifficulties = 2;
+        additionalTime = 3;
+        timeBetweenFoods = 2;
         foodTimer = 0;
-        additionalTime = 2;
     }
 }
